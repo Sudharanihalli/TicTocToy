@@ -1,0 +1,84 @@
+class TicTacToe
+  attr_reader :players, :board, :current_player
+
+    def initialize
+      @board = [
+        nil, nil, nil,
+        nil, nil, nil,
+        nil, nil, nil,
+      ]
+      @players = []
+    end
+  
+    def start
+        if players.length != 2
+           raise StandardError, "Two players are required to play TicTacToe"
+        end
+    
+        @current_player = players.first   
+
+        render
+          get_input
+          render
+          switch_player
+      end
+    end
+
+    def switch_player
+      @current_player = (@current_player == players.first) ? players.last : players.first
+    end
+          
+    def get_input
+       puts "#{current_player.name},where would you like to go? [1-9]"
+       location = gets.chomp.to_i
+       board[location - 1] = current_player
+    end
+
+
+    def render
+      puts
+        puts "#{board[0]&.mark || " "} | #{board[1]&.mark || " "} | #{board[2]&.mark || " "}"
+        puts "--------"
+        puts "#{board[3]&.mark || " "} | #{board[4]&.mark || " "} | #{board[5]&.mark || " "}"
+        puts "--------"
+        puts "#{board[6]&.mark || " "} | #{board[7]&.mark || " "} | #{board[8]&.mark || " "}"
+      puts
+    end
+
+    def win?
+        false  
+    end
+
+    def draw?
+        false
+    end
+
+    def add_player(name=nil)
+      mark = players.empty? ? "X" : "O"
+
+         if name == nil
+          puts "What is your name?"
+          name = gets.chomp
+        end
+
+      players << Player.new(name, mark)
+    end
+  end
+  
+class Player
+    attr_reader :name, :mark
+  
+    def initialize(name, mark)
+      @name,  @mark = name, mark
+    end
+  end
+  
+
+  game = TicTacToe.new
+
+  game.add_player("Chris",)
+  game.add_player("Bob")
+
+  game.start
+
+  
